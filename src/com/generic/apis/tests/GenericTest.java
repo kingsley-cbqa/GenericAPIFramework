@@ -27,6 +27,7 @@ public class GenericTest extends BaseTest {
 		weatherInfo = null;
 		
 		// file path can be moved to config file
+		// This file would make it fail on another machine
 		excelFilePath 	=	"C:/Users/Kingsley Onwukwe/workspace/GenericAPIFramework/data_files/GenericAPIFramework.xls"; 
 		worksheetName 	= 	"DataPool1";
 		tableName 		=	"DataSet";
