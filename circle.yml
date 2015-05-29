@@ -5,4 +5,5 @@
 ##########################################
 
 test:
-  - ant -Dclasses="GenericAPIFramework"
+  override:
+    - ant -Dclasses="GenericAPIFramework"
