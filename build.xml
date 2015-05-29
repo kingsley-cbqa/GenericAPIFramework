@@ -1,0 +1,68 @@
+<project name="Run API Tests" default="run.tests" basedir=".">
+	
+	<!-- set global properties for this build -->
+	<property name="build.dir" location="build"/>
+	<property name="src.dir" location="src"/>
+	<property name="lib.dir" location="jars" />
+	<property name="config.dir" location="config" />
+	<property name="classes" value="${classes}" />
+	<property name="report.dir" value="reports" />
+
+	<echo message="Tests to run: ${classes}" />
+	
+	<!-- create the build directory structure -->
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${report.dir}"/>
+	</target>
+	
+	<!-- include project jars -->
+	<path id="project.jars">
+		<fileset dir="${lib.dir}" >
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- include configs -->
+	<path id="configs">
+		<!-- <fileset dir="${src.dir}" >
+			<include name="log4j.properties"/>
+			<include name="config.properties"/> 
+		</fileset> -->
+		<dirset dir="${src.dir}" />
+		<pathelement path="${src.dir}" />
+	</path>
+	
+	<!-- compile java files -->
+	<target name="compile" depends="init" description="compile the source" >
+		<mkdir dir="${build.dir}/classes" />
+		<javac includeantruntime="false" 
+			   debug="true"
+			   srcdir="${src.dir}" 
+			   destdir="${build.dir}/classes" >
+			<classpath refid="project.jars" />
+			<!-- <classpath refid="configs"/> --> 
+		</javac>
+	</target>
+	
+	<!-- run main script -->
+	<target name="run.tests" depends="compile" description="run api tests" >
+		<java classname="com.generic.apis.helpers.ScriptDriver" failonerror="true">
+			<arg value="-h"/>
+			<classpath>
+				<path refid="project.jars" />
+				<path location="${build.dir}/classes" />  
+			</classpath>
+			
+			<sysproperty key="classes" 	value="${classes}" />
+			
+		</java>
+	</target>
+	
+	<!-- cleanup artifacts -->
+	<target name="clean" description="clean up">
+		<delete dir="${build.dir}" />
+	</target>
+		
+		
+</project>
