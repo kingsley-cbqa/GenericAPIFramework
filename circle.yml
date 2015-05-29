@@ -6,4 +6,4 @@
 
 test:
   override:
-    - ant -Dclasses="GenericAPIFramework"
+    - ant -Dclasses="GenericAPIFramework" -verbose
